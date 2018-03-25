@@ -1,13 +1,11 @@
+using RestHelpers.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Reflection;
-using RestHelpers.Attributes;
-using Microsoft.Extensions.Logging;
 using System.Linq.Dynamic.Core;
+using System.Reflection;
 
-namespace RestHelpers
+namespace RestHelpers.Extensions
 {
     public static class IQueryAbleExtensions
     {

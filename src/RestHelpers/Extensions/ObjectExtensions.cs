@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Reflection;
-using System.Text;
 
-namespace RestHelpers
+namespace RestHelpers.Extensions
 {
     public static class ObjectExtensions
     {

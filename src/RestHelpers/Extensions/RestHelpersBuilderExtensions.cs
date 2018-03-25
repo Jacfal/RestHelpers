@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
+using RestHelpers.Services;
 
-namespace RestHelpers
+namespace RestHelpers.Extensions
 {
     /// <summary>
     ///     Extensions for builder.

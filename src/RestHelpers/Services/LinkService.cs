@@ -6,8 +6,9 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using System.Dynamic;
+using RestHelpers.Extensions;
 
-namespace RestHelpers
+namespace RestHelpers.Services
 {
     /// <summary>
     ///     HATEOAS links management service.
