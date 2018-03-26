@@ -9,17 +9,31 @@ namespace RestHelpers.Extensions
     public static class ObjectExtensions
     {
         /// <summary>
-        ///     Shaping desired fields.
+        ///     This extension is used to fields data filtering from source object.
         /// </summary>
-        /// <typeparam name="TSource"></typeparam>
-        /// <param name="source"></param>
-        /// <param name="fields"></param>
+        /// <typeparam name="TSource">Object type.</typeparam>
+        /// <param name="source">Source object.</param>
+        /// <param name="fields">Fields separated by certain separator.</param>
         /// <returns></returns>
         public static ExpandoObject ShapeData<TSource>(this TSource source, string fields)
         {
+            var splitFields = fields.Split(Constants.QueryStringObjectDelimiter);
+
+            return source.ShapeData(splitFields);
+        }
+
+        /// <summary>
+        ///     This extension is used to fields data filtering from source object.
+        /// </summary>
+        /// <typeparam name="TSource">Object type.</typeparam>
+        /// <param name="source">Source object.</param>
+        /// <param name="fields">Fields which should be part of the returned object.</param>
+        /// <returns>Filtered object.</returns>
+        public static ExpandoObject ShapeData<TSource>(this TSource source, params string[] fields)
+        {
             if (source == null)
             {
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException("Source cann't be null.");
             }
 
             var dataObject = new ExpandoObject();
@@ -28,8 +42,8 @@ namespace RestHelpers.Extensions
             var properties = typeof(TSource).GetTypeInfo()
                 .GetProperties(BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
-            // put all properties into the expando object
-            if (string.IsNullOrWhiteSpace(fields))
+            // fileds arary is empty - all fields will be part of returned object
+            if (fields.Length < 1)
             {
                 foreach (var property in properties)
                 {
@@ -40,8 +54,6 @@ namespace RestHelpers.Extensions
 
                 return dataObject;
             }
-
-            // TODO vyresit duplictni field, kdyz ho user zada do fields a je povinny, tak se nachazi 2x v expando objectu
 
             // put required properties into the expando object
             foreach (var property in properties)
@@ -61,7 +73,7 @@ namespace RestHelpers.Extensions
             }
 
             // put desired properties into the expando object
-            foreach (var field in fields.Split(Constants.QueryStringObjectDelimiter))
+            foreach (var field in fields)
             {
                 var fieldName = field.Trim();
 
